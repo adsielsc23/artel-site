@@ -1,10 +1,10 @@
 /*
-  Custom JavaScript for ARTEL COMPANY site
-  - Highlights active navigation tab
-  - Sets footer year
-  - Optional FAQ toggles (accordion)
+  ARTEL COMPANY - site scripts
+  - Footer year
+  - Active nav highlight
+  - Optional FAQ accordion
+  - Mobile hamburger menu (panel + overlay)
 */
-
 document.addEventListener('DOMContentLoaded', function () {
   // Year
   const yearEl = document.getElementById('year');
@@ -18,70 +18,67 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // FAQ toggle (if FAQ exists on a page)
-  const faqItems = document.querySelectorAll('.faq-item h3');
-  faqItems.forEach(function (h) {
+  // FAQ toggle (if present)
+  const faqHeads = document.querySelectorAll('.faq-item h3');
+  faqHeads.forEach(h => {
     h.style.cursor = 'pointer';
-    h.addEventListener('click', function () {
+    h.addEventListener('click', () => {
       const answer = h.nextElementSibling;
       if (!answer) return;
 
       const isOpen = answer.style.display === 'block';
-      // Close all
       document.querySelectorAll('.faq-item p').forEach(p => p.style.display = 'none');
-      // Toggle current
       answer.style.display = isOpen ? 'none' : 'block';
     });
   });
-});
 
-// Hamburger menu (mobile)
-document.addEventListener('DOMContentLoaded', function () {
+  // Hamburger menu (mobile)
   const toggle = document.querySelector('.nav-toggle');
   const nav = document.getElementById('primary-nav');
   const overlay = document.querySelector('.nav-overlay');
 
   if (!toggle || !nav || !overlay) return;
 
-  function openMenu() {
+  const openMenu = () => {
     nav.classList.add('open');
     overlay.hidden = false;
     toggle.setAttribute('aria-expanded', 'true');
-    // prevent background scroll
     document.documentElement.style.overflow = 'hidden';
-  }
+  };
 
-  function closeMenu() {
+  const closeMenu = () => {
     nav.classList.remove('open');
     overlay.hidden = true;
     toggle.setAttribute('aria-expanded', 'false');
     document.documentElement.style.overflow = '';
-  }
+  };
 
-  toggle.addEventListener('click', function () {
+  const onToggle = (e) => {
+    if (e) e.preventDefault();
     const isOpen = nav.classList.contains('open');
-    if (isOpen) closeMenu();
-    else openMenu();
-  });
+    isOpen ? closeMenu() : openMenu();
+  };
+
+  // Click + touch support
+  toggle.addEventListener('click', onToggle);
+  toggle.addEventListener('touchend', onToggle, { passive: false });
 
   overlay.addEventListener('click', closeMenu);
 
-  // Close on link click (mobile)
+  // Close when selecting a link on mobile
   nav.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => {
       if (window.innerWidth < 980) closeMenu();
     });
   });
 
-  // Close on ESC
+  // ESC closes
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && nav.classList.contains('open')) closeMenu();
   });
 
-  // Safety: close if resized to desktop
+  // If resized to desktop, ensure closed
   window.addEventListener('resize', () => {
-    if (window.innerWidth >= 980) {
-      closeMenu();
-    }
+    if (window.innerWidth >= 980) closeMenu();
   });
 });

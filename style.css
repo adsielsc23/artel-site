@@ -41,6 +41,10 @@ a {
 .site-header {
   position: sticky;
   top: 0;
+  z-index: 2000;
+
+  position: sticky;
+  top: 0;
   width: 100%;
   background-color: #ffffff;
   border-bottom: 1px solid #e0e0e0;
@@ -805,3 +809,11 @@ a {
   background: #ffffff;
   box-shadow: 0 10px 22px rgba(0,0,0,0.04);
 }
+
+/* Fix mobile: ensure hamburger/menu is tappable and above hero */
+.nav-toggle{
+  position: relative;
+  z-index: 2100;
+  touch-action: manipulation;
+}
+.logo-link{ position: relative; z-index: 2100; }
