@@ -677,7 +677,7 @@ a {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.45);
-  z-index: 1200;
+  z-index: 2700;
 }
 
 @media (max-width: 979px){
@@ -695,7 +695,7 @@ a {
     background: #ffffff;
     border-left: 1px solid #e9e9e9;
     padding: 1rem;
-    z-index: 1300;
+    z-index: 2600;
     overflow-y: auto;
     box-shadow: -18px 0 40px rgba(0,0,0,0.14);
   }
@@ -817,3 +817,9 @@ a {
   touch-action: manipulation;
 }
 .logo-link{ position: relative; z-index: 2100; }
+
+/* Extra safety: keep menu above overlay and tappable */
+@media (max-width: 979px){
+  .main-nav{ pointer-events: auto; }
+  .nav-overlay{ pointer-events: auto; }
+}
