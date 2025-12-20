@@ -53,22 +53,32 @@ document.addEventListener('DOMContentLoaded', function () {
     document.documentElement.style.overflow = '';
   };
 
-  const onToggle = (e) => {
+  const toggleMenu = (e) => {
     if (e) e.preventDefault();
     const isOpen = nav.classList.contains('open');
     isOpen ? closeMenu() : openMenu();
   };
 
-  // Click + touch support
-  toggle.addEventListener('click', onToggle);
-  toggle.addEventListener('touchend', onToggle, { passive: false });
+  // Tap/click on hamburger
+  toggle.addEventListener('click', toggleMenu);
+  toggle.addEventListener('touchend', toggleMenu, { passive: false });
 
-  overlay.addEventListener('click', closeMenu);
+  // Overlay is visual only (pointer-events disabled in CSS).
+  // Close when tapping/clicking outside the menu.
+  const outsideClose = (e) => {
+    if (!nav.classList.contains('open')) return;
+    const target = e.target;
+    const clickedInside = nav.contains(target) || toggle.contains(target);
+    if (!clickedInside) closeMenu();
+  };
+  document.addEventListener('click', outsideClose);
+  document.addEventListener('touchstart', outsideClose, { passive: true });
 
-  // Close when selecting a link on mobile
+  // Close when selecting a link (and allow navigation)
   nav.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => {
       if (window.innerWidth < 980) closeMenu();
+      // do NOT prevent default (navigation must happen)
     });
   });
 
