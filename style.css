@@ -31,6 +31,19 @@ a {
   color: inherit;
 }
 
+
+/* =========================
+   Hero backgrounds por página
+   ========================= */
+body[data-page="home"] .hero { --hero-bg: url('assets/img/hero-home-opt.jpg'); }
+body[data-page="internet"] .page-hero { --hero-bg: url('assets/img/hero-internet-opt.jpg'); }
+body[data-page="solar"] .page-hero { --hero-bg: url('assets/img/hero-solar-opt.jpg'); }
+body[data-page="seguridad"] .page-hero { --hero-bg: url('assets/img/hero-seguridad-opt.jpg'); }
+body[data-page="proyectos"] .page-hero { --hero-bg: url('assets/img/caso-campo-opt.jpg'); }
+body[data-page="cobertura"] .page-hero { --hero-bg: url('assets/img/hero-home-opt.jpg'); }
+body[data-page="nosotros"] .page-hero { --hero-bg: url('assets/img/hero-home-opt.jpg'); }
+body[data-page="contacto"] .page-hero { --hero-bg: url('assets/img/hero-home-opt.jpg'); }
+
 .container {
   width: 90%;
   max-width: 1200px;
@@ -108,7 +121,11 @@ position: sticky;
 
 /* Hero */
 .hero {
-  background: linear-gradient(rgba(46, 125, 50, 0.85), rgba(21, 101, 192, 0.85)), url('https://images.pexels.com/photos/248880/pexels-photo-248880.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2') no-repeat center center/cover;
+  /* Imagen de portada (se puede cambiar por página con data-page) */
+  --hero-bg: url('assets/img/hero-home-opt.jpg');
+  background:
+    linear-gradient(rgba(6, 25, 35, 0.75), rgba(6, 25, 35, 0.55)),
+    var(--hero-bg) no-repeat center center/cover;
   color: #ffffff;
   padding: 4rem 0;
   text-align: center;
@@ -528,9 +545,14 @@ position: sticky;
 
 /* Page hero */
 .page-hero {
-  padding: 3rem 0;
+  /* Imagen de portada (se puede cambiar por página con data-page) */
+  --hero-bg: url('assets/img/hero-home-opt.jpg');
+  background:
+    linear-gradient(rgba(6, 25, 35, 0.78), rgba(6, 25, 35, 0.60)),
+    var(--hero-bg) no-repeat center center/cover;
   color: #ffffff;
-  background: linear-gradient(135deg, rgba(21,101,192,0.88), rgba(46,125,50,0.88));
+  padding: 3.5rem 0;
+  text-align: center;
 }
 .page-hero h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: 0.6rem; }
 .page-hero p { max-width: 70ch; opacity: 0.95; }
@@ -638,6 +660,22 @@ position: sticky;
   font-weight: 400;
   font-family: 'Lato', sans-serif;
 }
+
+.card-media {
+  height: 160px;
+  overflow: hidden;
+  border-radius: 14px;
+  margin-bottom: 14px;
+}
+
+.card-media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.02);
+}
+
 .form-grid textarea { resize: vertical; min-height: 120px; }
 .form-grid label.full { grid-column: 1 / -1; }
 
@@ -872,171 +910,64 @@ position: sticky;
   .mobile-tabs{ display: none; }
 }
 
-/* ========== Header CTA (desktop) ========== */
-.header-cta-group{
-  display: none;
-  gap: 0.6rem;
-  align-items: center;
-  margin-left: auto;
-}
-@media (min-width: 980px){
-  .header-cta-group{ display: inline-flex; }
-}
 
-/* ========== Mobile CTA Strip (sticky under header) ========== */
-.mobile-cta-strip{
-  display: none;
-  gap: 0.6rem;
-  padding: 0.65rem 0.7rem 0.8rem;
-  background: #ffffff;
-  border-top: 1px solid #eeeeee;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+/* Media strip (imágenes referenciales) */
+.media-strip{
+  padding: 1.2rem 0 0.2rem;
+  background: #0b1220;
 }
-.mobile-cta-strip::-webkit-scrollbar{ height: 6px; }
-.mobile-cta-strip::-webkit-scrollbar-thumb{ background: rgba(0,0,0,0.15); border-radius: 999px; }
-
-.cta-pill{
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.65rem 0.85rem;
-  border-radius: 999px;
-  border: 1px solid #e9e9e9;
-  background: #f7f7f7;
-  color: #212121;
-  text-decoration: none;
-  font-weight: 800;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.92rem;
-  white-space: nowrap;
-  line-height: 1.05;
-}
-
-.cta-pill.primary{
-  background: #1565C0;
-  border-color: #1565C0;
-  color: #ffffff;
-  flex-direction: column;
-  gap: 0.15rem;
-  padding: 0.55rem 0.9rem;
-}
-.cta-pill .cta-main{ font-size: 0.92rem; }
-.cta-pill .cta-sub{ font-size: 0.86rem; opacity: 0.95; }
-
-@media (max-width: 979px){
-  .mobile-cta-strip{ display: flex; }
-}
-@media (min-width: 980px){
-  .mobile-cta-strip{ display: none; }
-}
-
-/* ========== Client Selector (Home) ========== */
-.client-selector .section-lead{
-  margin-top: -0.6rem;
-}
-
-.client-grid{
+.media-grid{
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-  margin-top: 1.25rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
 }
-
-@media (min-width: 760px){
-  .client-grid{ grid-template-columns: repeat(2, 1fr); }
+.media-item{
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  overflow: hidden;
 }
-@media (min-width: 1100px){
-  .client-grid{ grid-template-columns: repeat(5, 1fr); }
-}
-
-.client-card{
+.media-item img{
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
   display: block;
-  background: #ffffff;
-  border: 1px solid #e9e9e9;
-  border-radius: 18px;
-  padding: 1.05rem;
-  text-decoration: none;
-  color: inherit;
-  box-shadow: 0 10px 22px rgba(0,0,0,0.05);
-  transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
-  height: 100%;
+}
+.media-item figcaption{
+  padding: 10px 12px 12px;
+  color: rgba(255,255,255,0.90);
+  font-size: 0.95rem;
+}
+@media (max-width: 768px){
+  .media-grid{ grid-template-columns: 1fr; }
+  .media-item img{ height: 170px; }
 }
 
-.client-card:hover{
-  transform: translateY(-2px);
-  border-color: #dcdcdc;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.08);
-}
 
-.client-icon{
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: #f5f5f5;
-  margin-bottom: 0.7rem;
-}
-.client-icon i{ font-size: 1.1rem; color: #1565C0; }
 
-.client-card h3{
-  margin: 0.15rem 0 0.4rem;
-  font-size: 1.05rem;
-}
-
-.client-card p{
-  margin: 0 0 0.8rem;
-  opacity: 0.9;
-}
-
-.client-link{
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  font-weight: 800;
-  color: #1565C0;
-}
-
-.selector-cta{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  justify-content: center;
-  margin-top: 1.4rem;
-}
-
-/* ========== Brand Watermark Background ========== */
+/* Marca de agua (logo) */
 body{
   position: relative;
 }
-
 body::before{
   content: "";
   position: fixed;
   inset: 0;
-  background-image: url("assets/logo.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: min(720px, 70vw);
-  opacity: 0.045; /* subtle watermark */
+  background: url("assets/logo.png") no-repeat center 140px;
+  background-size: 520px auto;
+  opacity: 0.035;
   pointer-events: none;
   z-index: 0;
+  transform: rotate(-10deg);
 }
-
-/* Keep content above watermark */
-.site-header,
-section,
-footer{
+header, main, footer{
   position: relative;
   z-index: 1;
 }
-
-@media (max-width: 979px){
+@media (max-width: 768px){
   body::before{
-    background-size: min(420px, 78vw);
-    opacity: 0.04;
+    background-position: center 110px;
+    background-size: 420px auto;
+    opacity: 0.03;
   }
 }
