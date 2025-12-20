@@ -92,3 +92,80 @@ document.addEventListener('DOMContentLoaded', function () {
     if (window.innerWidth >= 980) closeMenu();
   });
 });
+
+/* ===== Lightbox: abrir imágenes grandes ===== */
+(function(){
+  const lb = document.createElement("div");
+  lb.className = "lightbox";
+  lb.innerHTML = `
+    <button class="lightbox__close" aria-label="Cerrar">×</button>
+    <img class="lightbox__img" alt="Vista ampliada" />
+  `;
+  document.body.appendChild(lb);
+
+  const lbImg = lb.querySelector(".lightbox__img");
+  const closeBtn = lb.querySelector(".lightbox__close");
+
+  function openLightbox(src, alt){
+    lbImg.src = src;
+    lbImg.alt = alt || "Imagen";
+    lb.classList.add("is-open");
+    document.documentElement.style.overflow = "hidden";
+  }
+  function closeLightbox(){
+    lb.classList.remove("is-open");
+    lbImg.src = "";
+    document.documentElement.style.overflow = "";
+  }
+
+  document.addEventListener("click", (e) => {
+    const img = e.target.closest("img[data-lightbox='true']");
+    if(img){
+      e.preventDefault();
+      openLightbox(img.getAttribute("src"), img.getAttribute("alt"));
+      return;
+    }
+    if(e.target === lb || e.target === closeBtn){
+      closeLightbox();
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if(e.key === "Escape") closeLightbox();
+  });
+})();
+
+/* ===== Formulario -> WhatsApp (Cotización) ===== */
+(function(){
+  const form = document.querySelector(".quote-form");
+  if(!form) return;
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const data = new FormData(form);
+    const nombre = (data.get("nombre") || "").toString().trim();
+    const zona = (data.get("zona") || "").toString().trim();
+    const servicio = (data.get("servicio") || "").toString().trim();
+    const cliente = (data.get("cliente") || "").toString().trim();
+    const detalle = (data.get("detalle") || "").toString().trim();
+    const telefono = (data.get("telefono") || "").toString().trim();
+    const correo = (data.get("correo") || "").toString().trim();
+
+    const msg =
+`Hola ARTEL COMPANY, quiero cotizar:
+
+• Nombre: ${nombre}
+• Zona/Distrito: ${zona}
+• Tipo de servicio: ${servicio}
+• Tipo de cliente: ${cliente}
+• Detalle: ${detalle}
+• Teléfono: ${telefono}
+• Correo: ${correo}
+
+¿Podemos coordinar una evaluación técnica?`;
+
+    const url = "https://wa.me/51926192633?text=" + encodeURIComponent(msg);
+    window.open(url, "_blank", "noopener");
+  });
+})();
