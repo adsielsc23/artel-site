@@ -91,4 +91,55 @@ document.addEventListener('DOMContentLoaded', function () {
   window.addEventListener('resize', () => {
     if (window.innerWidth >= 980) closeMenu();
   });
+
+  // Quote form -> WhatsApp message (no backend)
+  document.querySelectorAll('form.quote-form').forEach((form) => {
+    const waBtn = form.querySelector('[data-wa-send]');
+    if (!waBtn) return;
+
+    const phone = '51926192633';
+
+    const buildMessage = () => {
+      const get = (name) => {
+        const el = form.querySelector(`[name="${name}"]`);
+        return el ? (el.value || '').trim() : '';
+      };
+
+      const lines = [];
+      lines.push('Hola ARTEL COMPANY, deseo una cotización.');
+      lines.push('');
+      const nombre = get('nombre');
+      const zona = get('zona');
+      const servicio = get('servicio');
+      const cliente = get('cliente');
+      const detalle = get('detalle');
+      const telefono = get('telefono');
+      const correo = get('correo');
+
+      if (nombre) lines.push(`Nombre: ${nombre}`);
+      if (zona) lines.push(`Zona/Distrito: ${zona}`);
+      if (servicio) lines.push(`Servicio: ${servicio}`);
+      if (cliente) lines.push(`Tipo de cliente: ${cliente}`);
+      if (detalle) lines.push(`Detalle: ${detalle}`);
+      if (telefono) lines.push(`Teléfono: ${telefono}`);
+      if (correo) lines.push(`Correo: ${correo}`);
+
+      lines.push('');
+      lines.push('Enviado desde la web de ARTEL COMPANY.');
+      return lines.join('
+');
+    };
+
+    waBtn.addEventListener('click', () => {
+      // Validate required fields quickly
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      const text = encodeURIComponent(buildMessage());
+      const url = `https://wa.me/${phone}?text=${text}`;
+      window.location.href = url; // works best on mobile
+    });
+  });
+
 });
