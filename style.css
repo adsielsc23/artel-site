@@ -826,3 +826,48 @@ position: sticky;
 
 
 /* Stacking fix: header/nav above overlay on mobile browsers */
+
+/* ========== Mobile Top Tabs (no JS) ========== */
+.mobile-tabs{
+  display: none;
+  gap: 0.5rem;
+  padding: 0.55rem 0.6rem 0.7rem;
+  background: #ffffff;
+  border-top: 1px solid #eeeeee;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.mobile-tabs::-webkit-scrollbar{ height: 6px; }
+.mobile-tabs::-webkit-scrollbar-thumb{ background: rgba(0,0,0,0.15); border-radius: 999px; }
+
+.m-tab{
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #e9e9e9;
+  border-radius: 999px;
+  background: #f7f7f7;
+  color: #212121;
+  text-decoration: none;
+  font-weight: 800;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.92rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+.m-tab i{ font-size: 0.95rem; }
+.m-tab:active{ transform: translateY(1px); }
+
+@media (max-width: 979px){
+  /* Prefer tabs on mobile: no hamburger, no sidebar */
+  .nav-toggle{ display: none !important; }
+  .main-nav{ display: none !important; }
+  .nav-overlay{ display: none !important; }
+  .mobile-tabs{ display: flex; }
+}
+
+@media (min-width: 980px){
+  .mobile-tabs{ display: none; }
+}
