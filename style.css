@@ -1007,3 +1007,36 @@ position: sticky;
   justify-content: center;
   margin-top: 1.4rem;
 }
+
+/* ========== Brand Watermark Background ========== */
+body{
+  position: relative;
+}
+
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("assets/logo.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: min(720px, 70vw);
+  opacity: 0.045; /* subtle watermark */
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Keep content above watermark */
+.site-header,
+section,
+footer{
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 979px){
+  body::before{
+    background-size: min(420px, 78vw);
+    opacity: 0.04;
+  }
+}
